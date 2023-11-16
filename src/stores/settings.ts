@@ -41,9 +41,9 @@ export const useSettingsStore = defineStore("settings", () => {
     intensity,
     position,
   }: {
-    color?: string,
-    intensity?: number,
-    position?: THREE.Vector3,
+    color?: string;
+    intensity?: number;
+    position?: THREE.Vector3;
   }) {
     directionalLightSettings.value = {
       color: color ?? directionalLightSettings.value.color,
@@ -57,8 +57,8 @@ export const useSettingsStore = defineStore("settings", () => {
     color,
     intensity,
   }: {
-    color?: string,
-    intensity?: number,
+    color?: string;
+    intensity?: number;
   }) {
     ambientLightSettings.value = {
       color: color ?? directionalLightSettings.value.color,
