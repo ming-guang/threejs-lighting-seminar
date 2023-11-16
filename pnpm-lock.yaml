@@ -20,6 +20,9 @@ dependencies:
   vue:
     specifier: ^3.3.4
     version: 3.3.4
+  vue-accessible-color-picker:
+    specifier: ^4.1.4
+    version: 4.1.4(vue@3.3.4)
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.3.4)
@@ -3040,6 +3043,14 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /vue-accessible-color-picker@4.1.4(vue@3.3.4):
+    resolution: {integrity: sha512-uq5wPWiR+VeuaZGxWRKuZSKpf2WH1EHa0Oas+rsEdgw35zZ/zotpw5LvyMiqbAagpiHxCp0AzqwDkMJ7dSbGQA==}
+    peerDependencies:
+      vue: ^3.2.x
+    dependencies:
+      vue: 3.3.4
+    dev: false
 
   /vue-demi@0.14.6(vue@3.3.4):
     resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
