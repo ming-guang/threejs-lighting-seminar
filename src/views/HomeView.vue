@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Scence from "../components/Scence.vue";
+import ControlPanel from "../components/ControlPanel.vue";
 </script>
 
 <template>
@@ -9,6 +10,8 @@ import Scence from "../components/Scence.vue";
         <Scence />
       </Suspense>
     </div>
-    <div class="flex-initial w-3/12 h-screen"></div>
+    <div class="flex-initial w-3/12 h-screen">
+      <ControlPanel />
+    </div>
   </div>
 </template>
