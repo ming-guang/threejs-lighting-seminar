@@ -2,7 +2,11 @@ import * as THREE from "three";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export type SupportedLightType = "none" | "directional-light" | "ambient-light";
+export type SupportedLightType =
+  | "none"
+  | "directional-light"
+  | "ambient-light"
+  | "hemisphere-light";
 
 export interface DirectionalLightSettings {
   color: string;
@@ -12,6 +16,12 @@ export interface DirectionalLightSettings {
 
 export interface AmbientLightSettings {
   color: string;
+  intensity: number;
+}
+
+export interface HemisphereLightSettings {
+  skyColor: string;
+  groundColor: string;
   intensity: number;
 }
 
@@ -25,6 +35,11 @@ export const useSettingsStore = defineStore("settings", () => {
   });
   const ambientLightSettings = ref<AmbientLightSettings>({
     color: "#FFFFFF",
+    intensity: 1.0,
+  });
+  const hemisphereLightSettings = ref<HemisphereLightSettings>({
+    skyColor: "#90D7EC",
+    groundColor: "#FFFFFF",
     intensity: 1.0,
   });
 
@@ -61,10 +76,26 @@ export const useSettingsStore = defineStore("settings", () => {
     intensity?: number;
   }) {
     ambientLightSettings.value = {
-      color: color ?? directionalLightSettings.value.color,
-      intensity: intensity ?? directionalLightSettings.value.intensity,
+      color: color ?? ambientLightSettings.value.color,
+      intensity: intensity ?? ambientLightSettings.value.intensity,
     };
     lightType.value = "ambient-light";
+  }
+  function setHemisphereLight({
+    skyColor,
+    groundColor,
+    intensity,
+  }: {
+    skyColor?: string;
+    groundColor?: string;
+    intensity?: number;
+  }) {
+    hemisphereLightSettings.value = {
+      skyColor: skyColor ?? hemisphereLightSettings.value.skyColor,
+      groundColor: groundColor ?? hemisphereLightSettings.value.groundColor,
+      intensity: intensity ?? hemisphereLightSettings.value.intensity,
+    };
+    lightType.value = "hemisphere-light";
   }
 
   return {
@@ -72,9 +103,11 @@ export const useSettingsStore = defineStore("settings", () => {
     lightType,
     directionalLightSettings,
     ambientLightSettings,
+    hemisphereLightSettings,
     updateModel,
     setNoLight,
     setDirectionalLight,
     setAmbientLight,
+    setHemisphereLight,
   };
 });

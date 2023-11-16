@@ -18,6 +18,7 @@ const onChange = () => {
   });
 };
 
+// @ts-expect-error
 const colorChange = (e) => {
   color = e.colors.hex.substring(0, 7);
   onChange();

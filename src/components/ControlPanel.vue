@@ -4,6 +4,7 @@ import { type SupportedLightType, useSettingsStore } from "../stores/settings";
 import { models } from "../stores/models";
 import DirectionalLightControl from "./DirectionalLightControl.vue";
 import AmbientLightControl from "./AmbientLightControl.vue";
+import HemisphereLightControl from "./HemisphereLightControl.vue";
 const settings = useSettingsStore();
 const settingsRef = storeToRefs(settings);
 
@@ -27,6 +28,11 @@ const onUpdateLightType = () => {
 
   if (lightType === "ambient-light") {
     settings.setAmbientLight({});
+    return;
+  }
+
+  if (lightType === "hemisphere-light") {
+    settings.setHemisphereLight({});
     return;
   }
 };
@@ -72,6 +78,12 @@ const onUpdateLightType = () => {
       <option :value="'ambient-light'" :select="lightType === 'ambient-light'">
         Ambient light
       </option>
+      <option
+        :value="'hemisphere-light'"
+        :select="lightType === 'hemisphere-light'"
+      >
+        Hemisphere light
+      </option>
     </select>
 
     <div v-if="settingsLightType() === 'directional-light'">
@@ -81,6 +93,11 @@ const onUpdateLightType = () => {
 
     <div v-if="settingsLightType() === 'ambient-light'">
       <AmbientLightControl />
+    </div>
+    <div v-else=""></div>
+
+    <div v-if="settingsLightType() === 'hemisphere-light'">
+      <HemisphereLightControl />
     </div>
     <div v-else=""></div>
   </div>
