@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import * as THREE from "three";
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "../stores/settings";
 const settings = useSettingsStore();
@@ -15,6 +14,7 @@ const onChange = () => {
   });
 };
 
+// @ts-expect-error
 const colorChange = (e) => {
   color = e.colors.hex.substring(0, 7);
   onChange();
