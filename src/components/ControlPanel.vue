@@ -3,8 +3,11 @@ import { storeToRefs } from "pinia";
 import { type SupportedLightType, useSettingsStore } from "../stores/settings";
 import { models } from "../stores/models";
 import DirectionalLightControl from "./DirectionalLightControl.vue";
+import AmbientLightControl from "./AmbientLightControl.vue";
 const settings = useSettingsStore();
 const settingsRef = storeToRefs(settings);
+
+const settingsLightType = () => settingsRef.lightType.value;
 
 let lightType: SupportedLightType = settings.lightType;
 let modelKey = settings.modelKey;
@@ -19,6 +22,11 @@ const onUpdateLightType = () => {
 
     if (lightType === "directional-light") {
         settings.setDirectionalLight({});
+        return;
+    }
+
+    if (lightType === "ambient-light") {
+        settings.setAmbientLight({});
         return;
     }
 };
@@ -41,10 +49,17 @@ const onUpdateLightType = () => {
             v-model="lightType" @change="onUpdateLightType()">
             <option :value="'none'" :select="lightType === 'none'">None</option>
             <option :value="'directional-light'" :select="lightType === 'directional-light'">Directional light</option>
+            <option :value="'ambient-light'" :select="lightType === 'ambient-light'">Ambient light</option>
         </select>
 
-        <div v-if="lightType === 'directional-light'">
+        <div v-if="settingsLightType() === 'directional-light'">
             <DirectionalLightControl />
         </div>
+        <div v-else=""></div>
+
+        <div v-if="settingsLightType() === 'ambient-light'">
+            <AmbientLightControl />
+        </div>
+        <div v-else=""></div>
     </div>
 </template>
