@@ -3,7 +3,10 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/Addons.js";
 
 export class SimpleModel {
-  constructor(public readonly path: string) {}
+  constructor(
+    public readonly name: string,
+    public readonly path: string,
+  ) {}
 
   async loadObject(): Promise<THREE.Object3D> {
     // @ts-expect-error
@@ -19,7 +22,7 @@ export class SimpleModel {
 }
 
 export const models: { [key: string]: SimpleModel } = {
-  teapot: new SimpleModel("assets/models/teapot.obj"),
-  spoon: new SimpleModel("assets/models/spoon.obj"),
-  teacup: new SimpleModel("assets/models/teacup.obj"),
+  teapot: new SimpleModel("Teapot", "assets/models/teapot.obj"),
+  spoon: new SimpleModel("Spoon", "assets/models/spoon.obj"),
+  teacup: new SimpleModel("Teacup", "assets/models/teacup.obj"),
 };
