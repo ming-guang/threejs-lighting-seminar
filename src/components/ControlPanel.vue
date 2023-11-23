@@ -7,6 +7,7 @@ import AmbientLightControl from "./AmbientLightControl.vue";
 import HemisphereLightControl from "./HemisphereLightControl.vue";
 import PointLightControl from "./PointLightControl.vue";
 import SpotLightControl from "./SpotLightControl.vue";
+import FogControl from "./FogControl.vue";
 const settings = useSettingsStore();
 const settingsRef = storeToRefs(settings);
 
@@ -51,7 +52,7 @@ const onUpdateLightType = () => {
 </script>
 
 <template>
-  <div class="max-h-screen m-2.5 overflow-auto">
+  <div class="max-h-screen m-2.5 mb-2 overflow-auto">
     <label for="model" class="block mb-2 text-sm font-medium text-gray-900"
       >Model</label
     >
@@ -127,5 +128,12 @@ const onUpdateLightType = () => {
       <SpotLightControl />
     </div>
     <div v-else=""></div>
+
+    <div
+      class="my-8 flex items-center gap-4 before:h-px before:flex-1 before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300 after:content-['']"
+    >
+      Fog
+    </div>
+    <FogControl />
   </div>
 </template>

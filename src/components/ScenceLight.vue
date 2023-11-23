@@ -9,6 +9,7 @@ const {
   hemisphereLightSettings,
   pointLightSettings,
   spotLightSettings,
+  fogSettings,
 } = storeToRefs(useSettingsStore());
 function stringToColor(color: string): Color {
   return new Color(color);
@@ -61,6 +62,14 @@ function stringToColor(color: string): Color {
     :penumbra="spotLightSettings.penumbra"
     :decay="spotLightSettings.decay"
     :position="spotLightSettings.position"
+  />
+  <TresGroup v-else></TresGroup>
+
+  <TresFog
+    v-if="fogSettings.enabled"
+    :color="stringToColor(fogSettings.color)"
+    :near="fogSettings.near"
+    :far="fogSettings.far"
   />
   <TresGroup v-else></TresGroup>
 </template>

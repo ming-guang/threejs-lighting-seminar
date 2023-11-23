@@ -45,6 +45,13 @@ export interface SpotLightSettings {
   position: THREE.Vector3;
 }
 
+export interface FogSettings {
+  enabled: boolean;
+  color: string;
+  near: number;
+  far: number;
+}
+
 export const useSettingsStore = defineStore("settings", () => {
   const modelKey = ref<string>("teapot");
   const lightType = ref<SupportedLightType>("directional-light");
@@ -77,6 +84,12 @@ export const useSettingsStore = defineStore("settings", () => {
     penumbra: 0,
     decay: 2.0,
     position: new THREE.Vector3(-5, 5, 10),
+  });
+  const fogSettings = ref<FogSettings>({
+    enabled: false,
+    color: "#CCCCCC",
+    near: 1,
+    far: 1000,
   });
 
   function updateModel(key: string) {
@@ -185,6 +198,25 @@ export const useSettingsStore = defineStore("settings", () => {
     lightType.value = "spot-light";
   }
 
+  function updateFogSettings({
+    enabled,
+    color,
+    near,
+    far,
+  }: {
+    enabled?: boolean;
+    color?: string;
+    near?: number;
+    far?: number;
+  }) {
+    fogSettings.value = {
+      enabled: enabled ?? fogSettings.value.enabled,
+      color: color ?? fogSettings.value.color,
+      near: near ?? fogSettings.value.near,
+      far: far ?? fogSettings.value.far,
+    };
+  }
+
   return {
     modelKey,
     lightType,
@@ -193,6 +225,7 @@ export const useSettingsStore = defineStore("settings", () => {
     hemisphereLightSettings,
     pointLightSettings,
     spotLightSettings,
+    fogSettings,
     updateModel,
     setNoLight,
     setDirectionalLight,
@@ -200,5 +233,6 @@ export const useSettingsStore = defineStore("settings", () => {
     setHemisphereLight,
     setPointLight,
     setSpotLight,
+    updateFogSettings,
   };
 });
