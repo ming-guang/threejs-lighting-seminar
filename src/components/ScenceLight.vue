@@ -7,6 +7,7 @@ const {
   ambientLightSettings,
   hemisphereLightSettings,
   pointLightSettings,
+  spotLightSettings,
 } = storeToRefs(useSettingsStore());
 </script>
 
@@ -44,6 +45,18 @@ const {
     :distance="pointLightSettings.distance"
     :decay="pointLightSettings.decay"
     :position="pointLightSettings.position"
+  />
+  <TresGroup v-else></TresGroup>
+
+  <TresSpotLight
+    v-if="lightType === 'spot-light'"
+    :color="spotLightSettings.color"
+    :intensity="spotLightSettings.intensity"
+    :distance="spotLightSettings.distance"
+    :angle="spotLightSettings.angle"
+    :penumbra="spotLightSettings.penumbra"
+    :decay="spotLightSettings.decay"
+    :position="spotLightSettings.position"
   />
   <TresGroup v-else></TresGroup>
 </template>
