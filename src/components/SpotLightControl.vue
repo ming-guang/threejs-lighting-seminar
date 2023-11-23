@@ -37,7 +37,7 @@ const colorChange = (e) => {
     <label class="block mb-2 text-sm font-medium text-gray-900">Color</label>
     <ColorPicker
       alpha-channel="hide"
-      @color="color"
+      :color="color"
       @color-change="colorChange"
     />
   </div>
