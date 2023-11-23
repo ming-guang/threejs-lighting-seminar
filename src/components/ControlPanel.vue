@@ -51,7 +51,7 @@ const onUpdateLightType = () => {
 </script>
 
 <template>
-  <div class="m-2.5">
+  <div class="max-h-screen m-2.5 overflow-auto">
     <label for="model" class="block mb-2 text-sm font-medium text-gray-900"
       >Model</label
     >
