@@ -6,7 +6,8 @@ export type SupportedLightType =
   | "none"
   | "directional-light"
   | "ambient-light"
-  | "hemisphere-light";
+  | "hemisphere-light"
+  | "point-light";
 
 export interface DirectionalLightSettings {
   color: string;
@@ -25,6 +26,14 @@ export interface HemisphereLightSettings {
   intensity: number;
 }
 
+export interface PointLightSettings {
+  color: string;
+  intensity: number;
+  distance: number;
+  decay: number;
+  position: THREE.Vector3;
+}
+
 export const useSettingsStore = defineStore("settings", () => {
   const modelKey = ref<string>("teapot");
   const lightType = ref<SupportedLightType>("directional-light");
@@ -41,6 +50,13 @@ export const useSettingsStore = defineStore("settings", () => {
     skyColor: "#90D7EC",
     groundColor: "#FFFFFF",
     intensity: 1.0,
+  });
+  const pointLightSettings = ref<PointLightSettings>({
+    color: "#FFFFFF",
+    intensity: 1.0,
+    distance: 0,
+    decay: 2.0,
+    position: new THREE.Vector3(-5, 5, 10),
   });
 
   function updateModel(key: string) {
@@ -98,16 +114,41 @@ export const useSettingsStore = defineStore("settings", () => {
     lightType.value = "hemisphere-light";
   }
 
+  function setPointLight({
+    color,
+    intensity,
+    distance,
+    decay,
+    position,
+  }: {
+    color?: string;
+    intensity?: number;
+    distance?: number;
+    decay?: number;
+    position?: THREE.Vector3;
+  }) {
+    pointLightSettings.value = {
+      color: color ?? pointLightSettings.value.color,
+      intensity: intensity ?? pointLightSettings.value.intensity,
+      distance: distance ?? pointLightSettings.value.distance,
+      decay: decay ?? pointLightSettings.value.decay,
+      position: position ?? pointLightSettings.value.position,
+    };
+    lightType.value = "point-light";
+  }
+
   return {
     modelKey,
     lightType,
     directionalLightSettings,
     ambientLightSettings,
     hemisphereLightSettings,
+    pointLightSettings,
     updateModel,
     setNoLight,
     setDirectionalLight,
     setAmbientLight,
     setHemisphereLight,
+    setPointLight,
   };
 });
