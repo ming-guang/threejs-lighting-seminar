@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Color } from "three";
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "../stores/settings";
 const {
@@ -9,6 +10,9 @@ const {
   pointLightSettings,
   spotLightSettings,
 } = storeToRefs(useSettingsStore());
+function stringToColor(color: string): Color {
+  return new Color(color);
+}
 </script>
 
 <template>
@@ -16,7 +20,7 @@ const {
     v-if="lightType === 'directional-light'"
     :position="directionalLightSettings.position"
     :intensity="directionalLightSettings.intensity"
-    :color="directionalLightSettings.color"
+    :color="stringToColor(directionalLightSettings.color)"
     :cast-shadow="true"
   />
   <TresGroup v-else></TresGroup>
@@ -24,15 +28,15 @@ const {
   <TresAmbientLight
     v-if="lightType === 'ambient-light'"
     :intensity="ambientLightSettings.intensity"
-    :color="ambientLightSettings.color"
+    :color="stringToColor(ambientLightSettings.color)"
     :cast-shadow="true"
   />
   <TresGroup v-else></TresGroup>
 
   <TresHemisphereLight
     v-if="lightType === 'hemisphere-light'"
-    :color="hemisphereLightSettings.skyColor"
-    :ground-color="hemisphereLightSettings.groundColor"
+    :color="stringToColor(hemisphereLightSettings.skyColor)"
+    :ground-color="stringToColor(hemisphereLightSettings.groundColor)"
     :intensity="hemisphereLightSettings.intensity"
     :cast-shadow="true"
   />
@@ -40,7 +44,7 @@ const {
 
   <TresPointLight
     v-if="lightType === 'point-light'"
-    :color="pointLightSettings.color"
+    :color="stringToColor(pointLightSettings.color)"
     :intensity="pointLightSettings.intensity"
     :distance="pointLightSettings.distance"
     :decay="pointLightSettings.decay"
@@ -50,7 +54,7 @@ const {
 
   <TresSpotLight
     v-if="lightType === 'spot-light'"
-    :color="spotLightSettings.color"
+    :color="stringToColor(spotLightSettings.color)"
     :intensity="spotLightSettings.intensity"
     :distance="spotLightSettings.distance"
     :angle="spotLightSettings.angle"
