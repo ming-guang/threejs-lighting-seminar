@@ -6,6 +6,7 @@ import DirectionalLightControl from "./DirectionalLightControl.vue";
 import AmbientLightControl from "./AmbientLightControl.vue";
 import HemisphereLightControl from "./HemisphereLightControl.vue";
 import PointLightControl from "./PointLightControl.vue";
+import SpotLightControl from "./SpotLightControl.vue";
 const settings = useSettingsStore();
 const settingsRef = storeToRefs(settings);
 
@@ -39,6 +40,11 @@ const onUpdateLightType = () => {
 
   if (lightType === "point-light") {
     settings.setPointLight({});
+    return;
+  }
+
+  if (lightType === "spot-light") {
+    settings.setSpotLight({});
     return;
   }
 };
@@ -93,6 +99,9 @@ const onUpdateLightType = () => {
       <option :value="'point-light'" :select="lightType === 'point-light'">
         Point light
       </option>
+      <option :value="'spot-light'" :select="lightType === 'spot-light'">
+        Spot light
+      </option>
     </select>
 
     <div v-if="settingsLightType() === 'directional-light'">
@@ -105,8 +114,17 @@ const onUpdateLightType = () => {
     </div>
     <div v-else=""></div>
 
+    <div v-if="settingsLightType() === 'hemisphere-light'">
+      <HemisphereLightControl />
+    </div>
+
     <div v-if="settingsLightType() === 'point-light'">
       <PointLightControl />
+    </div>
+    <div v-else=""></div>
+
+    <div v-if="settingsLightType() === 'spot-light'">
+      <SpotLightControl />
     </div>
     <div v-else=""></div>
   </div>

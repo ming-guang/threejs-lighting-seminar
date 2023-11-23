@@ -7,7 +7,8 @@ export type SupportedLightType =
   | "directional-light"
   | "ambient-light"
   | "hemisphere-light"
-  | "point-light";
+  | "point-light"
+  | "spot-light";
 
 export interface DirectionalLightSettings {
   color: string;
@@ -34,6 +35,16 @@ export interface PointLightSettings {
   position: THREE.Vector3;
 }
 
+export interface SpotLightSettings {
+  color: string;
+  intensity: number;
+  distance: number;
+  angle: number;
+  penumbra: number;
+  decay: number;
+  position: THREE.Vector3;
+}
+
 export const useSettingsStore = defineStore("settings", () => {
   const modelKey = ref<string>("teapot");
   const lightType = ref<SupportedLightType>("directional-light");
@@ -55,6 +66,15 @@ export const useSettingsStore = defineStore("settings", () => {
     color: "#FFFFFF",
     intensity: 1.0,
     distance: 0,
+    decay: 2.0,
+    position: new THREE.Vector3(-5, 5, 10),
+  });
+  const spotLightSettings = ref<SpotLightSettings>({
+    color: "#FFFFFF",
+    intensity: 1.0,
+    distance: 0,
+    angle: Math.PI / 3,
+    penumbra: 0,
     decay: 2.0,
     position: new THREE.Vector3(-5, 5, 10),
   });
@@ -136,6 +156,34 @@ export const useSettingsStore = defineStore("settings", () => {
     };
     lightType.value = "point-light";
   }
+  function setSpotLight({
+    color,
+    intensity,
+    distance,
+    angle,
+    penumbra,
+    decay,
+    position,
+  }: {
+    color?: string;
+    intensity?: number;
+    distance?: number;
+    angle?: number;
+    penumbra?: number;
+    decay?: number;
+    position?: THREE.Vector3;
+  }) {
+    spotLightSettings.value = {
+      color: color ?? spotLightSettings.value.color,
+      intensity: intensity ?? spotLightSettings.value.intensity,
+      distance: distance ?? spotLightSettings.value.distance,
+      angle: angle ?? spotLightSettings.value.angle,
+      penumbra: penumbra ?? spotLightSettings.value.penumbra,
+      decay: decay ?? spotLightSettings.value.decay,
+      position: position ?? spotLightSettings.value.position,
+    };
+    lightType.value = "spot-light";
+  }
 
   return {
     modelKey,
@@ -144,11 +192,13 @@ export const useSettingsStore = defineStore("settings", () => {
     ambientLightSettings,
     hemisphereLightSettings,
     pointLightSettings,
+    spotLightSettings,
     updateModel,
     setNoLight,
     setDirectionalLight,
     setAmbientLight,
     setHemisphereLight,
     setPointLight,
+    setSpotLight,
   };
 });
